@@ -1,0 +1,62 @@
+<html>
+<head>
+    <script src="/PoxelRender.js"></script>
+    <script>
+        const PIXEL_SIZE = 5;
+
+
+        function drawPoint(x, y) {
+            
+            let newPoint = document.createElement("div");
+            
+            newPoint.style.position = "absolute";
+            newPoint.style.top = y * (PIXEL_SIZE) + "em";
+            newPoint.style.left = x * PIXEL_SIZE + "em";
+            newPoint.style.backgroundColor = "black";
+            newPoint.style.width = PIXEL_SIZE + "px";
+            newPoint.style.height = PIXEL_SIZE + "px";
+            newPoint.classList.add("point");
+            document.getElementById('root').appendChild(newPoint);
+
+            // let timeKey = (new Date()).valueOf();
+            // newPoint.id = "Point-" + timeKey;
+
+        }
+
+        function clearScreen() {
+            let rootElement = document.getElementById('root');
+            let i = rootElement.childNodes.length;
+            while (i--) {
+                rootElement.removeChild(rootElement.lastChild);
+            }
+        }
+
+
+        var testCubePoints = [
+            { x: -250, y: -250, z: -250 },
+            { x: 250,  y: -250, z: -250 },
+            { x: -250, y: 250,  z: -250 },
+            { x: -250, y: -250, z: 250  },
+            { x: 250,  y: 250,  z: -250 },
+            { x: -250, y: 250,  z: 250  },
+            { x: 250,  y: -250, z: 250  },
+            { x: 250,  y: 250,  z: 250  }
+        ];
+
+        document.onreadystatechange = () => document.readyState === "complete" && (async function () {
+            const INNER_WIDTH = window.innerWidth / parseFloat(getComputedStyle(document.querySelector('body'))['font-size']) / PIXEL_SIZE;
+            const INNER_HEIGHT = window.innerHeight / parseFloat(getComputedStyle(document.querySelector('body'))['font-size']) / PIXEL_SIZE;
+
+            // calling PoxelRender.js
+            displayRotatingObject(testCubePoints, INNER_HEIGHT, INNER_WIDTH, drawPoint, clearScreen);
+        })()
+    </script>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+</body>
+
+</html>
